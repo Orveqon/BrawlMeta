@@ -1,28 +1,59 @@
-# Brawl Meta - Brawl Stars Oyuncu İstatistikleri
+# Brawl Meta - Gelişmiş Brawl Stars İstatistik Uygulaması
 
-Bu proje, Brawl Stars oyuncu verilerini [Resmi Brawl Stars API](https://developer.brawlstars.com/) ve [Brawlify](https://brawlify.com/) CDN'ini kullanarak gösteren bir web uygulamasıdır.
+Brawl Meta, Brawl Stars oyuncu profillerini, detaylı istatistiklerini, savaş günlüklerini ve kulüp bilgilerini modern ve kullanıcı dostu bir arayüzde sunan bir web uygulamasıdır.
 
-Uygulama, Next.js ve Vercel Serverless Functions kullanılarak oluşturulmuştur. Bu mimari, API anahtarlarının güvenli bir şekilde sunucu tarafında saklanmasını sağlar.
+---
 
-## Kurulum ve Çalıştırma
+## ✨ Temel Özellikler
 
-### 1. Proje Bağımlılıklarını Yükleyin
+- **Oyuncu Profili Arama:** Oyuncu etiketini kullanarak detaylı profil verilerini anında getirin.
+- **Detaylı İstatistikler:** Maksimum kupa, mevcut kupa, 3v3 zaferleri, solo/duo zaferleri gibi istatistikleri görüntüleyin.
+- **Savaşçı Listesi:** Oyuncunun tüm savaşçılarını, kupa sayılarını ve seviyelerini ilgili görselleriyle birlikte listeleyin.
+- **Kulüp Bilgileri:** Oyuncunun mevcut kulübünün adını ve rozetini profil kartında görün.
+- **Savaş Günlüğü:** Oyuncunun son maçlarının detaylı dökümünü (sonuç, harita, mod, kullanılan savaşçı) inceleyin.
+- **Güvenli API Kullanımı:** Brawl Stars API anahtarı, sadece sunucu tarafında çalışan bir proxy katmanı üzerinden güvenli bir şekilde kullanılır, asla kullanıcı tarafına sızdırılmaz.
+- **Verimli Önbellekleme:** Tekrarlanan sorguları hızlandırmak ve API limitlerini aşmamak için sunucu tarafında 2 dakikalık önbellekleme mekanizması bulunur.
+- **Gelişmiş Kullanıcı Deneyimi (UX):**
+  - Veriler yüklenirken modern iskelet (skeleton) animasyonları gösterilir.
+  - Hatalı veya geçersiz oyuncu etiketleri girildiğinde (hem karakter hem de uzunluk kontrolü) kullanıcı anında bilgilendirilir.
 
-Proje dizininde aşağıdaki komutu çalıştırarak gerekli tüm paketleri yükleyin:
+---
+
+## 🛠️ Kullanılan Teknolojiler
+
+- **Framework:** [Next.js](https://nextjs.org/) (React)
+- **Dil:** [TypeScript](https://www.typescriptlang.org/)
+- **Stil:** [Tailwind CSS](https://tailwindcss.com/)
+- **Platform:** [Vercel](https://vercel.com/) (Sunucusuz API Rotaları için)
+- **Veri Kaynakları:**
+  - [Resmi Brawl Stars API](https://developer.brawlstars.com/)
+  - [Brawlify CDN](https://brawlify.com/) (Görseller için)
+
+---
+
+## 🚀 Kurulum ve Çalıştırma
+
+Uygulamayı yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin.
+
+### 1. Bağımlılıkları Yükleyin
+
+Proje dizininde bir terminal açın ve gerekli tüm paketleri yüklemek için aşağıdaki komutu çalıştırın:
 
 ```bash
 npm install
 ```
 
-### 2. Ortam Değişkenlerini Ayarlayın
+### 2. API Anahtarını Tanımlayın
 
-Projenin ana dizininde (`brawlmeta/`) `.env.local` adında yeni bir dosya oluşturun. İçine size verilen Brawl Stars API anahtarını aşağıdaki gibi ekleyin:
+Projenin ana klasöründe (`brawlmeta/`) `.env.local` adında yeni bir dosya oluşturun. İçine, [Brawl Stars Geliştirici Portalı](https://developer.brawlstars.com/)'ndan aldığınız API anahtarınızı aşağıdaki formatta yapıştırın:
 
 ```
-BRAWLSTARS_API_TOKEN="BURAYA_API_ANAHTARINIZI_YAPIŞTIRIN"
+# .env.local
+
+BRAWLSTARS_API_TOKEN="COK_GIZLI_API_ANAHTARINIZ_BURAYA_GELECEK"
 ```
 
-**Not:** `.env.local` dosyası, gizli anahtarlarınızı saklar ve `git` tarafından takip edilmez, bu da anahtarınızın güvende kalmasını sağlar.
+> **Önemli:** `.env.local` dosyası `git` tarafından yok sayılır, bu sayede gizli anahtarınızın güvende kalması sağlanır.
 
 ### 3. Geliştirme Sunucusunu Başlatın
 
@@ -32,83 +63,24 @@ Tüm kurulum tamamlandıktan sonra, aşağıdaki komutla geliştirme sunucusunu 
 npm run dev
 ```
 
-Tarayıcınızda [http://localhost:3000](http://localhost:3000) adresini açarak uygulamayı görüntüleyebilirsiniz.
-
-## Proje Yapısı
-
-- `/src/app/page.tsx`: Kullanıcı arayüzünün bulunduğu ana sayfa.
-- `/src/app/api/player/[tag]/route.ts`: Brawl Stars API'sine istekleri yönlendiren ve API anahtarını güvenli bir şekilde kullanan sunucu tarafı API rotası (proxy).
-- `/src/components/`: Tekrar kullanılabilir React bileşenleri.
-  - `PlayerProfile.tsx`: Oyuncu profil bilgilerini gösteren kart.
-  - `BrawlerList.tsx`: Oyuncunun savaşçılarını listeleyen grid.
-- `/.env.local`: Gizli API anahtarının saklandığı dosya.
+Tarayıcınızda **[http://localhost:3000](http://localhost:3000)** adresini açarak çalışan uygulamayı görüntüleyebilirsiniz.
 
 ---
 
-## Test Senaryoları
+## 📂 Proje Yapısı
 
-Uygulamanın doğru çalıştığını doğrulamak için aşağıdaki senaryoları test edebilirsiniz:
-
-1.  **Geçerli Token + Geçerli Oyuncu Etiketi:**
-    -   **Adım:** Arama kutusuna geçerli bir oyuncu etiketi (ör: `Y2LQRR9J`) girin ve "Ara" butonuna tıklayın.
-    -   **Beklenen Sonuç:** Oyuncu profili ve savaşçı listesi doğru bir şekilde yüklenir (HTTP 200).
-
-2.  **Geçersiz (Yanlış) Token:**
-    -   **Adım:** `.env.local` dosyasındaki API anahtarını kasıtlı olarak bozun (ör: son birkaç karakteri silin).
-    -   **Beklenen Sonuç:** Arama yapıldığında "API yetkilendirme hatası..." şeklinde bir uyarı mesajı gösterilir (HTTP 401/403).
-
-3.  **Geçersiz (Bulunamayan) Oyuncu Etiketi:**
-    -   **Adım:** Arama kutusuna geçersiz veya var olmayan bir etiket (ör: `ABC`) girin.
-    -   **Beklenen Sonuç:** "Oyuncu bulunamadı..." şeklinde bir hata mesajı gösterilir (HTTP 404).
-
-4.  **Boş Etiket ile Arama:**
-    -   **Adım:** Arama kutusunu boş bırakıp "Ara" butonuna tıklayın.
-    -   **Beklenen Sonuç:** "Lütfen bir oyuncu etiketi girin." uyarısı gösterilir.
-
-5.  **API Rate Limit (İstek Limiti):**
-    -   **Adım:** Çok kısa bir süre içinde aynı etiketle tekrar tekrar arama yapın.
-    -   **Beklenen Sonuç:** İlk arama başarılı olur, sonrakiler önbellekten (cache) gelir. Eğer önbellek olmasaydı ve API limitine takılsaydınız, "İstek limiti aşıldı..." mesajı gösterilirdi (HTTP 429).
-
-6.  **CDN Resim Hatası (Fallback):**
-    -   **Not:** Mevcut kodda, resim bulunamazsa tarayıcı varsayılan olarak kırık resim ikonu gösterir. Tam bir production uygulamasında, `<img>` elementi için `onError` olayı kullanılarak yerel bir placeholder resim gösterilebilir.
-
----
-
-## Alternatif: No-Code Platform (Bubble) ile Kurulum
-
-Bu projeyi Bubble gibi bir no-code platformda yapmak isterseniz, izlemeniz gereken adımlar şunlardır:
-
-1.  **API Connector Kurulumu:**
-    -   Bubble'da "Plugins" sekmesine gidin ve "API Connector" eklentisini kurun.
-    -   Yeni bir API ekleyin ve adını "Brawl Stars API" olarak belirleyin.
-
-2.  **API Çağrısını Tanımlama (Oyuncu Verisi):**
-    -   Yeni bir API çağrısı (`call`) oluşturun ve adını "GetPlayer" yapın.
-    -   **Method:** `GET`
-    -   **URL:** `https://api.brawlstars.com/v1/players/[player_tag]`
-        -   URL'deki `[player_tag]` kısmını dinamik bir değer yapın ve "private" (gizli) olarak işaretlemeyin.
-    -   **Headers:**
-        -   `Authorization` key'i için value olarak `Bearer [api_key]` yazın. `[api_key]` kısmını dinamik bir değer yapın ve **"private" (gizli)** olarak işaretleyin. Bu, anahtarın client tarafına sızmasını engeller.
-
-3.  **Gizli Anahtarı Saklama:**
-    -   API Connector ayarlarında, `[api_key]` için gelen kutucuğa Brawl Stars API anahtarınızı yapıştırın. Bu anahtar Bubble'ın sunucularında güvenli bir şekilde saklanır.
-
-4.  **Arayüz (UI) Tasarımı:**
-    -   Bir `Input` elementi (oyuncu etiketini girmek için) ve bir `Button` elementi ("Ara") ekleyin.
-    -   Sonuçları göstermek için bir `Group` elementi oluşturun.
-
-5.  **Workflow (İş Akışı) Oluşturma:**
-    -   "Ara" butonuna tıklandığında yeni bir workflow başlatın.
-    -   **Adım 1:** "Get data from an external API" aksiyonunu seçin.
-    -   **API Provider:** Kurduğunuz "Brawl Stars API - GetPlayer" çağrısını seçin.
-    -   **player_tag:** Input elementinin değerini `URL encoded` olarak buraya bağlayın.
-    -   **api_key:** Gizli olarak kaydettiğiniz API anahtarını buraya bağlayın.
-    -   **Adım 2:** Gelen veriyi bir `custom state`'e (örneğin, sayfanın `playerData` state'i) kaydedin.
-
-6.  **Veriyi Gösterme:**
-    -   Sonuçları gösteren `Group` elementinin veri kaynağını (data source) bu `playerData` state'i yapın.
-    -   Group içindeki `Text` elementlerini `Parent group's PlayerData's name`, `Parent group's PlayerData's trophies` gibi ifadelere bağlayın.
-    -   Savaşçı listesi için bir `RepeatingGroup` kullanın ve veri kaynağını `playerData's brawlers` listesi yapın.
-    -   Resimler için `Image` elementinin URL'sini dinamik olarak `https://cdn.brawlify.com/brawler/[brawler_id].png` şeklinde oluşturun.
-
-Bu adımlar, kod yazmadan benzer bir işlevselliği Bubble üzerinde kurmanızı sağlar.
+```
+brawlmeta/
+├── src/
+│   ├── app/
+│   │   ├── api/player/[tag]/route.ts  # Güvenli, sunucu tarafı API proxy rotası
+│   │   ├── globals.css                # Global stil dosyası
+│   │   └── page.tsx                   # Ana sayfanın arayüzü (UI) ve mantığı
+│   └── components/
+│       ├── PlayerProfile.tsx            # Oyuncu profil kartı bileşeni
+│       ├── BrawlerList.tsx              # Savaşçı listesi bileşeni
+│       ├── BattleLog.tsx                # Savaş günlüğü bileşeni
+│       └── SkeletonLoader.tsx           # Yükleme animasyonu bileşeni
+├── .env.local                         # Gizli API anahtarının saklandığı dosya
+└── README.md                          # Bu dosya
+```

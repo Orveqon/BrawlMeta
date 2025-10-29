@@ -3,10 +3,13 @@
 import { useState } from 'react';
 import PlayerProfile from '@/components/PlayerProfile';
 import BrawlerList from '@/components/BrawlerList';
+import BattleLog from '@/components/BattleLog';
+import SkeletonLoader from '@/components/SkeletonLoader';
+import { Player } from '@/types';
 
 export default function Home() {
   const [tag, setTag] = useState('');
-  const [playerData, setPlayerData] = useState<any>(null);
+  const [playerData, setPlayerData] = useState<Player | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,8 +24,21 @@ export default function Home() {
     setError(null);
     setPlayerData(null);
 
-    // Kullanıcının girdiği etiket başındaki # karakterini temizle
     const formattedTag = tag.startsWith('#') ? tag.substring(1) : tag;
+
+    // Gelişmiş ön yüz etiket formatı doğrulaması
+    const validTagRegex = /^[0289PYLQGRJCUV]{3,9}$/;
+    if (!validTagRegex.test(formattedTag)) {
+        let errorMessage = 'Geçersiz etiket formatı.';
+        if (formattedTag.length < 3 || formattedTag.length > 9) {
+            errorMessage = 'Etiket 3 ila 9 karakter uzunluğunda olmalıdır.';
+        } else {
+            errorMessage = 'Etiket sadece şu karakterleri içerebilir: 0,2,8,9,P,Y,L,Q,G,R,J,C,U,V';
+        }
+        setError(errorMessage);
+        setLoading(false);
+        return;
+    }
 
     try {
       const response = await fetch(`/api/player/${formattedTag}`);
@@ -69,6 +85,8 @@ export default function Home() {
         </form>
 
         <div className="mt-4 w-full">
+          {loading && <SkeletonLoader />}
+
           {error && (
             <div className="bg-red-500 bg-opacity-20 border border-red-500 text-red-300 p-4 rounded-lg text-center">
               <p>Hata: {error}</p>
@@ -79,6 +97,7 @@ export default function Home() {
             <div className="animate-fade-in">
               <PlayerProfile player={playerData} />
               <BrawlerList brawlers={playerData.brawlers} />
+              <BattleLog battles={playerData.battlelog} playerTag={playerData.tag} />
             </div>
           )}
         </div>
