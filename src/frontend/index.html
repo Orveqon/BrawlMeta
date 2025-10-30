@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brawl Stars Ranked Meta Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="min-h-screen">
+  <div class="app">
+    <header class="nav">
+      <div class="title">Brawl Meta</div>
+      <div class="actions">
+        <input id="playerTag" placeholder="#P2LY8QJ" />
+        <button id="loadBtn">Load</button>
+        <button id="themeBtn">Theme</button>
+      </div>
+    </header>
+
+    <nav class="tabs">
+      <button data-tab="profile" class="active">Profile</button>
+      <button data-tab="battles">Battles</button>
+      <button data-tab="meta">Meta</button>
+      <button data-tab="ranked">Ranked AI</button>
+      <button data-tab="maps">Maps</button>
+    </nav>
+
+    <main>
+      <section id="tab-profile" class="tab active">
+        <div id="playerCard" class="card"></div>
+      </section>
+
+      <section id="tab-battles" class="tab">
+        <div class="grid2">
+          <div class="card"><canvas id="winLossChart"></canvas></div>
+          <div class="card"><canvas id="modeChart"></canvas></div>
+          <div class="card span2"><div id="battleList" class="list"></div></div>
+        </div>
+      </section>
+
+      <section id="tab-meta" class="tab">
+        <div class="grid2">
+          <div class="card"><canvas id="tierChart"></canvas></div>
+          <div class="card"><div id="trending" class="list"></div></div>
+        </div>
+      </section>
+
+      <section id="tab-ranked" class="tab">
+        <div id="rankedAdvice" class="card"></div>
+      </section>
+
+      <section id="tab-maps" class="tab">
+        <div id="mapAdvisor" class="card"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
