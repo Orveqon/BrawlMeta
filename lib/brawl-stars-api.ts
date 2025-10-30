@@ -94,3 +94,6 @@ export function getBrawlStarsAPI(): BrawlStarsAPI {
   }
   return apiInstance
 }
+
+// Explicit export for better module resolution
+export { BrawlStarsAPI }
